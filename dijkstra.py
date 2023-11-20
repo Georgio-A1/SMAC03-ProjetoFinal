@@ -1,3 +1,18 @@
+"""
+    Implementação do algoritmo de simulação de energia em redes de sensores
+    sem fio
+
+    Autores:    2022003479 - Georgio Georges Aoun
+                2021020134 - Gustavo Daniel Vitor
+                2020030584 - Luiz Raul Gomes Oliveira
+                2021015813 - Matheus Henrique Souza Araujo
+
+    Disciplina: Algoritimos em Grafos
+    Professor: Rafael Frinhani
+
+    Universidade Federal de Itajubá - UNIFEI
+"""
+
 import networkx as nx
 import math
 import random
@@ -25,11 +40,11 @@ def calcular_distancia(coord1, coord2):
 # Função para remover um nó do grafo
 def remover_no(G, no):
     G.remove_node(no)
-    print(f'Mote {no} morreu.')
+    print(f"Mote {no} esgotou sua energia na iteração {simulacao + 1}")
 
 def calcular_consumo_energia(distancia):
     E_elec = 50e-9  # 50 nJ/bit, custo energético para transmitir
-    epsilon_amp = 100e-12  # 100 pJ/bit/m^2, custo para ampliar o sinal
+    epsilon_amp = 10e-12  # 10 pJ/bit/m^2, custo para ampliar o sinal
     n = 2  # expoente de perda de caminho, representa diminuição do sinal com o aumento da distância
     k = 1000  # número de bits transmitidos
     tx_power = 14  # poder de transmissão em dBm (do datasheet)
@@ -67,7 +82,7 @@ G = nx.Graph()
 
 # Nome do arquivo com informações dos motes
 # Caso não funcionar coloque o caminho completo para o arquivo
-nome_arquivo = "Cenário 5 - Rede 400.txt"
+nome_arquivo = r"C:\Users\Georgio\Desktop\Cenário 5 - Rede 400.txt"
 
 # Ler as informações dos motes da semente
 motes = ler_informacoes_motes(nome_arquivo)
@@ -218,6 +233,7 @@ for recorte, grafo_recorte in grafos_recortes.items():
 
     # Adiciona um título com o número da simulação
     plt.suptitle(f'Simulação no tempo {recorte}')
+    plt.savefig(f'grafo_recorte_{recorte}.png')
     plt.show()
 
 print('Energia restante dos motes:')
